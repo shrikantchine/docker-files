@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/psql-password
+    secrets:
+      - psql-password
+    volumes:
+      - psql-volume:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+
+secrets:
+  psql-password:
+    external: true
+
+volumes:
+  psql-volume:
